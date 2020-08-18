@@ -37,20 +37,11 @@ public class ThreadHandler {
 			tasks.add(futureTask);
 			cachedThreadPool.submit(futureTask);
 		}
-		outer:
-			while(true) {
-				Iterator<FutureTask<Long>> iterator = tasks.iterator();
-				while (iterator.hasNext()) {
-					FutureTask<Long> task = iterator.next();
-					if (task.isDone()) {
-						results.add(task.get());
-						iterator.remove();
-					}else {
-						continue outer;
-					}
-				}	
-				break;
-			}
+		Iterator<FutureTask<Long>> iterator = tasks.iterator();
+		while (iterator.hasNext()) {
+			FutureTask<Long> task = iterator.next();
+			results.add(task.get());
+		}
         
 		return results;	
 	}
